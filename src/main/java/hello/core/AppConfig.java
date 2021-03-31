@@ -55,14 +55,18 @@ import org.springframework.context.annotation.Configuration;
 // 스프링 기반으로 변경 -> 이렇게 코를 넣으면 스프링 컨테이너에 넣어짐
 @Configuration // 설정을 구성한 다는 뜻
 public class AppConfig {
+    // @Bean memberService -> new MemoryMemberRepository()
+    //  @Bean OrderService -> new MemoryMemberRepository() 이렇게 되면, 싱글톤이 깨지는것처럼 보이는데 괜찮은가 ?
 
     @Bean // 스프링 컨테이너 빈으로 등록
     public MemberService memberService(){
+        System.out.println("call AppConfig.memberService"); // soutm 하면 자동으로 완성! - 호출로그를 남김 - 왜냐면, 호출이 안되서 중복 주소값을 가지는지 궁금해서!
         return new MemberServiceImpl(memberRepository());
     }
 
     @Bean
     public OrderService orderService(){
+        System.out.println("call AppConfig.orderService");
         return new OrderServiceImpl(
                 memberRepository(),
                 discountPolicy()
@@ -71,6 +75,7 @@ public class AppConfig {
 
     @Bean
     public MemberRepository memberRepository(){
+        System.out.println("call AppConfig.memberRepository");
         return new MemoryMemberRepository();
     }
 
@@ -80,3 +85,6 @@ public class AppConfig {
         return new RateDiscountPolicy();
     }
 }
+// 출력이 3번 등등 이러나야 하는데, 결국 1번만 일어난다.  -> 그 이유는 Configuration  떄문이다.!
+//call AppConfig.memberRepository
+//        call AppConfig.orderService
