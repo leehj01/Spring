@@ -15,9 +15,10 @@ import org.springframework.context.annotation.FilterType;
 @Configuration // 설정정보를 적어주는 애노테이션
 public class AutoAppConfig {
 
-    @Bean(name="memoryMemberRepository")
-    MemberRepository memberRepository(){
-        return new MemoryMemberRepository();
-    }
+    // 수동으로 등록하면 자동과 수동 빈등록 이름이 같아져서 오류가 남
+//    @Bean(name="memoryMemberRepository")
+//    MemberRepository memberRepository(){
+//        return new MemoryMemberRepository();
+//    }
 
 }

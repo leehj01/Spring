@@ -1,7 +1,6 @@
 package hello.core;
 // 애플리케이션의 전체 동작방식을 구성하는 '기획자'를 만들어주자!
 import hello.core.discount.DiscountPolicy;
-import hello.core.discount.FixDiscountPolicy;
 import hello.core.discount.RateDiscountPolicy;
 import hello.core.member.MemberRepository;
 import hello.core.member.MemberService;
@@ -65,7 +64,7 @@ public class AppConfig {
     }
 
     @Bean
-    public OrderService orderService(){
+    public OrderService orderService() {
         System.out.println("call AppConfig.orderService");
         return new OrderServiceImpl(
                 memberRepository(),
