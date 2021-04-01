@@ -28,14 +28,26 @@ public class OrderServiceImpl implements OrderService{
     // 이렇게 되면 인터페이스에만 의존하게 된다. 하지만, 구현체가 없기 때문에 null pointer exception 에러가 발생한다.
     // -> 누군가 클라이언트 OrderServiceImpl에 DiscountPolicy의 구현객체를 대신 생성하고 주입해주어야 함 .
 
+    //setter 을 쓰려면 , final은 빼야함
+    public MemberRepository memberRepository;
+    public DiscountPolicy discountPolicy;
 
-    public final MemberRepository memberRepository;
-    public final DiscountPolicy discountPolicy;
+    @Autowired
+    public void setDiscountPolicy(DiscountPolicy discountPolicy) {
+        System.out.println("discountPolicy = " + discountPolicy);
+        this.discountPolicy = discountPolicy;
+    }
+
+    @Autowired(required = false)
+    public void setMemberRepository(MemberRepository memberRepository) {
+        System.out.println("memberRepository = " + memberRepository);
+        this.memberRepository = memberRepository;
+    }
 
     // 생성자를 만듦 - 얘는 각각 파라미터가 무엇이 들어올지 알수 없당
     @Autowired // 생성자위에 적어두면, 자동으로 아래 매개변수를 주입해줌
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-        this.memberRepository = memberRepository;
+        this.memberRepository = memberRepository; // 생성자에는 값을 넣어줘야 에러가 발생안함
         this.discountPolicy = discountPolicy;
     }
 
